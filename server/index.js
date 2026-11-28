@@ -230,14 +230,15 @@ app.get('/api/documents', requireLogin, async (req, res) => {
   res.json({ documents }); 
 }); 
 
-// serve the built React site — hand out the files in client/dist (index.html, JS, CSS) as-is 
-app.use(express.static(path.join(process.cwd(), '../client/dist')));   // process.cwd() is server/, so ../client/dist 
-// catch-all: any request that didn't match an /api route above gets the React app's 
-index.html 
-app.use((req, res) =>                                                  
-// runs LAST, so API routes win 
-res.sendFile(path.join(process.cwd(), '../client/dist/index.html'))  // let React handle the in-app routing 
-); 
+
+// Serve the built React site
+const clientDistPath = path.join(process.cwd(), '../client/dist');
+app.use(express.static(clientDistPath));
+
+// Send index.html for frontend routes
+app.use((req, res) => {
+  res.sendFile(path.join(clientDistPath, 'index.html'));
+});
 
 // ===== 4. START THE SERVER (always the LAST line) ===== 
 app.listen(3000, () => console.log('Server running on http://localhost:3000')); 

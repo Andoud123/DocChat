@@ -1,0 +1,6 @@
+{
+  "dependencies": {
+    "@neondatabase/serverless": "^1.2.2",
+    "@prisma/adapter-neon": "^6.19.3"
+  }
+}
